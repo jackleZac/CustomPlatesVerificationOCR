@@ -169,8 +169,6 @@ The server will start at ``http://localhost:5000`` in debug mode. Ensure XAMPPâ€
 ```
 Result (200) OK:
 
-![My Image](images/img-2.png)
-
 
 
 
