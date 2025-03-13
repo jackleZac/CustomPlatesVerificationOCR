@@ -1,0 +1,2 @@
+# Exclude virtual environment from git
+/venv
