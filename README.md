@@ -130,7 +130,11 @@ The project structure includes the following files and directories:
         'database': 'trucks_db'
       }
    ```
-   
+   **Example Xampp**:
+
+   ![Postman setup](images/xampp.png)
+
+
 6. **Run the Backend**
 
    ```sh
