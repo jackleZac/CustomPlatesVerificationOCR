@@ -73,7 +73,7 @@ The project structure includes the following files and directories:
 
 2. **Set Up Virtual Environment**
    
-   Create a virtual environment to isolate dependencies:
+   Create a virtual environment to isolate dependencies. Open the terminal and enter:
    
    ```
    python -m venv venv
