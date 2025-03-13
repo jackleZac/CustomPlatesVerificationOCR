@@ -32,6 +32,7 @@ The project structure includes the following files and directories:
 - `main.py` - Flask app entry point
 - `routes.py` - API routes
 - `bk_tree.py` - BK-Tree and Levenshtein Distance implementation
+- `models` - Yolov8 trained with custom dataset
 - `db.py` - MySQL database utilities
 - `config.py` - Configuration (e.g., MySQL credentials)
 - `requirements.txt` - Dependencies
@@ -41,9 +42,15 @@ The project structure includes the following files and directories:
 
 ### Prerequisites
 
-- Python 3.8+
-- MySQL 8.0+
-- OCR tools like Tesseract (optional, if integrating image processing directly)
+- `Python 3.8+`
+- `MySQL 8.0+`
+- `easyOCR`
+- `flask`
+- `ultralytics` (for YOLOv8)
+- `easyocr`
+- `opencv-python`
+- `mysql-connector-python`
+- `numpy`
 
 1. **Clone the Repository**
 
@@ -92,9 +99,7 @@ The project structure includes the following files and directories:
       
    -- Sample data
    INSERT INTO trucks (plate_number, truck_id, owner) VALUES
-   ('ABC123', 'T001', 'John Doe'),
-   ('XYZ789', 'T002', 'Jane Smith'),
-   ('ABC456', 'T003', 'Alice Brown');
+   ('5YDR119', 'T005', 'Meme Stark');
    ```
 
    **Start Xampp**
@@ -120,29 +125,51 @@ The project structure includes the following files and directories:
 The server will start at ``http://localhost:5000`` in debug mode. Ensure XAMPP’s MySQL is running if using it
 
 ### API Endpoints
-***POST /api/search_plate***
-- ***Description***: Searches for truck records matching the provided plate number within a specified Levenshtein Distance tolerance
+***POST /api/scan_plate***
+- ***Description***: This route would receive an image, along with a max_distance of 2 sent by the frontend. It consists of several functionalities: 1) Detect a number plates, 2) extract texts from the number plates, 3) search for truck records matching the provided plate number within a specified Levenshtein Distance tolerance.
 
+  The curl command:
   ```
-  {
-    "plate_number": "ABC123",
-    "max_distance": 2 // optional, defaults to 2
-  }
+  curl -X POST http://localhost:5000/api/scan_plate \
+  -F "image=@vehicle_image.jpg" \
+  -F "max_distance=2"
   ```
+
+  The Postman command:
+
+  ![Postman setup](images/img-1.png)
 
 ***Response (200 OK):***
   ```
   {
-   "matches":
-      [{
-         "plate_number": "ABC123",
-         "truck_id": "T001",
-         "owner": "Stark",
-         "distance": 1
-      }]
-  }
+    "results": [
+        {
+            "detected_plate": "ABC123",
+            "matches": [
+                {
+                    "plate_number": "ABC123",
+                    "truck_id": "T001",
+                    "owner": "John Doe",
+                    "status": "active",
+                    "distance": 0,
+                    "detected_plate": "ABC123"
+                }
+            ],
+            "status": "registered"
+        }
+    ],
+    "execution_time_ms": 305.2,
+    "debug_info": {
+        "annotated_image": "debug_output/annotated_1691234567.jpg",
+        "cropped_plates": [
+            "debug_output/plate_1691234567_0.jpg"
+        ]
+    }
+}
 ```
-![My Image](images/image.png)
+Result (200) OK:
+
+![My Image](images/img-2.png)
 
 
 
