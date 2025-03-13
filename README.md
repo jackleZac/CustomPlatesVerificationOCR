@@ -2,11 +2,24 @@
 This is a Flask-based backend for a truck plate recognition system designed for customs use. It processes truck number plates (OCR is handled externally), stores truck records in a MySQL database, and searches for approximate matches using a Levenshtein Distance algorithm optimized with a BK-Tree. The backend exposes RESTful APIs for a separate frontend to interact with, enabling efficient matching of plate numbers despite potential OCR errors.
 
 ## Features
-
+- **Detection of Number Plates**: Uses Yolov8 to find the cooridinates of number plates in an image. Also, the model is further fine-tuned/trained on a custom dataset, which contain images of vehicles.
+- **Text Extraction**: Uses easyOCR to extract texts from the number plates. For this project, we are using the pre-trained model.
 - **Efficient Search**: Uses a BK-Tree to perform approximate string matching with Levenshtein Distance, tolerating OCR errors (e.g., "ABCI23" matches "ABC123").
 - **MySQL Integration**: Stores truck records (plate number, truck ID, owner) and retrieves details for matches.
 - **Modular Architecture**: Separates routes, database utilities, and search logic for maintainability.
 - **API Endpoints**: Provides endpoints to search for plates and add new truck records.
+
+## EasyOCR
+EasyOCR is an open-source Python library designed for Optical Character Recognition (OCR), which means it extracts text from images or scanned documents. It’s built to be user-friendly ("easy" is in the name for a reason) and supports over 80 languages, including English, Chinese, Arabic, and more. It’s particularly useful for tasks like reading license plates, signs, or handwritten notes in images.
+
+**How it works**: EasyOCR uses deep learning models (like convolutional neural networks) trained to detect and recognize text. It first identifies areas in an image where text exists (text detection) and then decodes those areas into readable characters (text recognition).
+
+## YOLOv8
+YOLOv8 is the latest version (as of now) of the "You Only Look Once" (YOLO) family of models, developed by Ultralytics. It’s a state-of-the-art object detection system, meaning it can identify and locate objects (like people, cars, or dogs) in images or videos in real-time. YOLOv8 builds on its predecessors with improved accuracy, speed, and versatility.
+
+**How it works**: YOLOv8 uses a single neural network to scan an image once (hence "You Only Look Once") and predict both the bounding boxes around objects and the class of those objects (e.g., "cat," "car"). It’s fast because it doesn’t process the image multiple times like older methods.
+
+**Example use**: In a video feed, YOLOv8 could detect and label every car and pedestrian, drawing boxes around them with labels.
 
 ## Search Algorithm
 
@@ -32,7 +45,7 @@ The project structure includes the following files and directories:
 - `main.py` - Flask app entry point
 - `routes.py` - API routes
 - `bk_tree.py` - BK-Tree and Levenshtein Distance implementation
-- `models` - Yolov8 trained with custom dataset
+- `models` - Yolov8 trained on a custom dataset
 - `db.py` - MySQL database utilities
 - `config.py` - Configuration (e.g., MySQL credentials)
 - `requirements.txt` - Dependencies
@@ -99,7 +112,8 @@ The project structure includes the following files and directories:
       
    -- Sample data
    INSERT INTO trucks (plate_number, truck_id, owner) VALUES
-   ('5YDR119', 'T005', 'Meme Stark');
+   ('5YDR119', 'T005', 'Meme Stark')
+   ('CJ60551', 'T007', 'Mehmet Galik');
    ```
 
    **Start Xampp**
@@ -137,7 +151,7 @@ The server will start at ``http://localhost:5000`` in debug mode. Ensure XAMPP�
 
   The Postman command:
 
-  ![Postman setup](images/img-1.png)
+  ![Postman setup](images/postman-setup.png)
 
 ***Response (200 OK):***
   ```
@@ -169,6 +183,6 @@ The server will start at ``http://localhost:5000`` in debug mode. Ensure XAMPP�
 ```
 Result (200) OK:
 
-
+![Postman setup](images/cj60551.png)
 
 

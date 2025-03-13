@@ -8,7 +8,7 @@ import cv2
 import numpy as np
 from db import get_db_connection
 
-# Initialize YOLOv8 with your custom-trained model
+# Initialize YOLOv8 with a custom-trained model
 yolo_model = YOLO('models/best (1).pt')  # Path to the downloaded best.pt
 reader = easyocr.Reader(['en'])  # EasyOCR for English
 
