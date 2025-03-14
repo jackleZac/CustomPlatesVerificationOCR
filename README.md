@@ -2,7 +2,7 @@
 This is a truck plate recognition system designed for customs use. It takes an image of truck, processes the number plates, stores truck records in a MySQL database, and searches for approximate matches using a Levenshtein Distance algorithm optimized with a BK-Tree. 
 
 ## Features
-- **Detection of Number Plates**: Uses Yolov8 to find the cooridinates of number plates in an image. Also, the model is further fine-tuned/trained on a custom dataset, which contain images of vehicles.
+- **Detection of Number Plates**: Uses Yolov8 to find the coordinates of number plates in an image. Also, the model is further fine-tuned on a custom dataset, which contain 300 images of vehicles for training and 100 images for evaluation.
 - **Text Extraction**: Uses easyOCR to extract texts from the number plates. For this project, we are using the pre-trained model.
 - **Efficient Search**: Uses a BK-Tree to perform approximate string matching with Levenshtein Distance, tolerating OCR errors (e.g., "ABCI23" matches "ABC123").
 - **MySQL Integration**: Stores truck records (plate number, truck ID, owner) and retrieves details for matches.
