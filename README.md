@@ -1,5 +1,5 @@
-# Truck Plate Recognition Backend
-This is a Flask-based backend for a truck plate recognition system designed for customs use. It processes truck number plates (OCR is handled externally), stores truck records in a MySQL database, and searches for approximate matches using a Levenshtein Distance algorithm optimized with a BK-Tree. The backend exposes RESTful APIs for a separate frontend to interact with, enabling efficient matching of plate numbers despite potential OCR errors.
+# Truck Plate Recognition System
+This is a truck plate recognition system designed for customs use. It takes an image of truck, processes the number plates, stores truck records in a MySQL database, and searches for approximate matches using a Levenshtein Distance algorithm optimized with a BK-Tree. 
 
 ## Features
 - **Detection of Number Plates**: Uses Yolov8 to find the cooridinates of number plates in an image. Also, the model is further fine-tuned/trained on a custom dataset, which contain images of vehicles.
@@ -189,4 +189,5 @@ Result (200) OK:
 
 ![Postman setup](images/cj60551.png)
 
-
+### GUI-based Interaction
+![Postman setup](images/gui.png)
